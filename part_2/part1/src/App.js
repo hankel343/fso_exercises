@@ -1,23 +1,29 @@
 import React from "react";
+import { useState } from 'react';
 
-const Hello = (props) => {
-  console.log(props)
+const Display = (props) => {
   return (
     <div>
-      <p>Hello {props.name}. You are {props.age} years old</p>
+      {props.counter}
     </div>
   )
 }
 
 const App = () => {
-  const name = 'Peter'
-  const age = 10
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => setCounter(counter + 1)
+  const setToZero = () => setCounter(0);
 
   return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name='Maya' age={26+10}/>
-      <Hello name={name} age={age} />
+      <div>{counter}</div>
+      <button onClick={increaseByOne}>
+        plus
+      </button>
+      <button onClick={setToZero}>
+        zero
+      </button>
     </div>
   )
 }
