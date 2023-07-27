@@ -16,11 +16,18 @@ const Statistics = (props) => {
     } else {
       return (
         <>
-        <StatisticsLine text={"good: "} value={good}/>
-        <StatisticsLine text={"neutral: "} value={neutral}/>
-        <StatisticsLine text={"bad: "} value={bad}/>
-        <StatisticsLine text={"average"} value={((good + -bad) / all).toFixed(1)}/>
-        <StatisticsLine text={"positive"} value={good / all * 100 + '%'}/>
+        <table>
+          <thead>
+            {/* .. */}
+          </thead>
+          <tbody>
+            <StatisticsLine text={"good "} value={good}/>
+            <StatisticsLine text={"neutral "} value={neutral}/>
+            <StatisticsLine text={"bad "} value={bad}/>
+            <StatisticsLine text={"average"} value={((good + -bad) / all).toFixed(1)}/>
+            <StatisticsLine text={"positive"} value={good / all * 100 + '%'}/>
+          </tbody>
+        </table>
         </>
       )
     }
@@ -39,7 +46,10 @@ const StatisticsLine = (props) => {
 
   return (
     <>
-      <p>{text} {value}</p>
+      <tr>
+        <td>{text}</td>
+        <td>{value}</td>
+      </tr>
     </>
   )
 }
