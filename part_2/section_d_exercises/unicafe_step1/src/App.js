@@ -44,17 +44,6 @@ const StatisticsLine = (props) => {
   )
 }
 
-const Button = (props) => {
-  const text = props.text;
-  const eventHandler = props.handleClick;
-
-  return (
-    <button onClick={eventHandler}>
-      {text}
-    </button>
-  )
-}
-
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
@@ -79,9 +68,17 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <Button text={"good"} eventHandler={handleGood}/>
-      <Button text={"neutral"} eventHandler={handleNeutral}/>
-      <Button text={"bad"} eventHandler={handleBad}/>
+      <button onClick={handleGood(good + 1)}>
+        good
+      </button>
+
+      <button onClick={handleNeutral(neutral + 1)}>
+        neutral
+      </button>
+
+      <button onClick={handleBad(bad + 1)}>
+        bad
+      </button>
 
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
