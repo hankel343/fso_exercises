@@ -31,6 +31,12 @@ const Statistics = (props) => {
       )
     }
   }
+
+  return (
+    <>
+      { outputHtml(all > 0) }
+    </>
+  )
 }
 
 const StatisticsLine = (props) => {
