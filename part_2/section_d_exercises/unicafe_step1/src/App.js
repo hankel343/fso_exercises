@@ -16,16 +16,10 @@ const Statistics = (props) => {
     } else {
       return (
         <>
-        {/* <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {all}</p>
-        <p>average {(good + -bad) / all * 100 + '%'}</p>
-        <p>positive {good / all * 100 + '%'}</p> */}
         <StatisticsLine text={"good: "} value={good}/>
         <StatisticsLine text={"neutral: "} value={neutral}/>
         <StatisticsLine text={"bad: "} value={bad}/>
-        <StatisticsLine text={"average"} value={(good + -bad) / all * 100 + '%'}/>
+        <StatisticsLine text={"average"} value={((good + -bad) / all).toFixed(1)}/>
         <StatisticsLine text={"positive"} value={good / all * 100 + '%'}/>
         </>
       )
