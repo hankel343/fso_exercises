@@ -1,13 +1,12 @@
 import Header from './Header';
 import Content from './Content';
-import Part from './Part';
 
-const Course = (props) => {
-
+const Course = ({ course }) => {
+    console.log(course);
     return (
-        <div>
-            <Header text="Half Stack application development"/>
-            <Content text="Fundamentals of React"/>
+        <div key={course.id}>
+            <Header text={course.name}/>
+            <Content parts={course.parts}/>
         </div>
     )
 }
