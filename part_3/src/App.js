@@ -23,6 +23,11 @@ const App = () => {
       name: newName
     }
 
+    if(containsObject(personObject)) {
+      alert(`${newName} already exists in the phone book.`);
+      return;
+    }
+
     setPersons(persons.concat(personObject));
     setNewName('');
   }
@@ -30,6 +35,15 @@ const App = () => {
   const handleNameChange = (event) => {
     console.log(event.target.value);
     setNewName(event.target.value);
+  }
+
+  const containsObject = (obj) => {
+    for (let i = 0; i < persons.length; i++) {
+      if (JSON.stringify(obj) === JSON.stringify(persons[i])) {
+        return true;
+      }
+    }
+    return false;
   }
 
   return (
