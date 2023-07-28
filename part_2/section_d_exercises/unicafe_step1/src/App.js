@@ -27,13 +27,20 @@ const Button = (props) => {
 const Display = (props) => {
   const i = props.i;
   const anecdotes = props.anecdotes;
-  const votes = props.votes;
+  const votes = Object.values(props.votes);
+
+  console.log(votes);
 
   return (
-    <>
+    <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[i]}</p>
-      <p>{votes[i]} votes</p>
-    </>
+      <p>has {votes[i]} votes</p>
+
+      <h1>Anecdote with the most votes</h1>
+      <p>{anecdotes[votes.indexOf(Math.max(...votes))]}</p>
+      <p>has {Math.max(...votes)} votes</p>
+    </div>
   )
 }
 
@@ -71,9 +78,9 @@ const App = () => {
 
   return (
     <div>
+      <Display i={selected} anecdotes={anecdotes} votes={points}/>
       <Button text={"next anecdote"} handler={advanceIterator} i={selected} votes={{...points}}/>
       <Button text={"vote"} handler={handleVote} i={selected} votes={{...points}}/>
-      <Display i={selected} anecdotes={anecdotes} votes={points}/>
       {/* {anecdotes[selected]} */}
     </div>
   )
