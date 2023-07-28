@@ -3,10 +3,21 @@ import { useState } from 'react'
 const Button = (props) => {
   const text = props.text;
   const handler = props.handler;
+  const idx = props.i;
+  const votes = props.votes;
 
+  if (text === "vote") {
+    return (
+      <>
+        <button onClick={handler(votes, idx)}>
+          {text}
+        </button>
+      </>
+    )
+  }
   return (
     <>
-      <button onClick={handler(props.i + 1)}>
+      <button onClick={handler(idx + 1)}>
         {text}
       </button>
     </>
@@ -16,10 +27,12 @@ const Button = (props) => {
 const Display = (props) => {
   const i = props.i;
   const anecdotes = props.anecdotes;
+  const votes = props.votes;
 
   return (
     <>
       <p>{anecdotes[i]}</p>
+      <p>{votes[i]} votes</p>
     </>
   )
 }
@@ -36,23 +49,31 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(Array(8).fill(0));
 
   const advanceIterator = (idx) => () => {
     console.log("selected is: ", idx);
-    setSelected(idx);
 
     if (idx === anecdotes.length) {
-      setSelected(-1);
+      console.log("setting back to beginning.");
+      setSelected(0);
     } else {
       setSelected(idx);
     }
   }
 
+  const handleVote = (newPoints, idx) => () => {
+    console.log("incrementing at: ", idx);
+    newPoints[idx] += 1;
+    setPoints(newPoints);
+  }
+
   return (
     <div>
-      <Button text={"next anecdote"} handler={advanceIterator} i={selected}/>
-      <Display i={selected} anecdotes={anecdotes}/>
+      <Button text={"next anecdote"} handler={advanceIterator} i={selected} votes={{...points}}/>
+      <Button text={"vote"} handler={handleVote} i={selected} votes={{...points}}/>
+      <Display i={selected} anecdotes={anecdotes} votes={points}/>
       {/* {anecdotes[selected]} */}
     </div>
   )
