@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Entries from './components/Entries';
 
-const Entry = ({name, number}) => {
+const Entry = ({id, name, number}) => {
   console.log('Creating entry: ', name, number);
-
   return (
-    <div key={name}>
+    <div key={id}>
       <p>{name} {number}</p>
     </div>
   )
@@ -73,28 +75,14 @@ const App = () => {
     <div>
       
       <h2>Phonebook</h2>
-      <p>Filter shown with: </p>
-      <input value={filter} onChange={handleFilterChange}/>
+      <Filter filterStr={filter} handleChange={handleFilterChange} />
 
       <h2>Add a new entry</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange}
+        newNumber={newNumber} handleNumberChange={handleNumberChange} />
 
       <h2>Numbers</h2>
-      {persons
-        .filter(person => person.name.includes(filter))
-        .map((person) => {
-        return <Entry key={person.id} name={person.name} number={person.number}/>
-      })}
+      <Entries persons={persons} filterStr={filter}/>
     </div>
   )
 }
