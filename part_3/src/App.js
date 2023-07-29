@@ -12,11 +12,15 @@ const Entry = ({name, number}) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '123' }
-  ]);
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  ])
 
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [filter, setFilter] = useState('');
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -24,7 +28,8 @@ const App = () => {
 
     const personObject = {
       name: newName,
-      number: newNumber
+      number: newNumber,
+      id: persons[-1].id + 1
     }
 
     if(containsObject(personObject)) {
@@ -50,6 +55,11 @@ const App = () => {
     setNewNumber(event.target.value);
   }
 
+  const handleFilterChange = (event) => {
+    console.log(event.target.value);
+    setFilter(event.target.value);
+  }
+
   const containsObject = (obj) => {
     for (let i = 0; i < persons.length; i++) {
       if (JSON.stringify(obj) === JSON.stringify(persons[i])) {
@@ -63,7 +73,10 @@ const App = () => {
     <div>
       
       <h2>Phonebook</h2>
+      <p>Filter shown with: </p>
+      <input value={filter} onChange={handleFilterChange}/>
 
+      <h2>Add a new entry</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
@@ -77,8 +90,10 @@ const App = () => {
       </form>
 
       <h2>Numbers</h2>
-      {persons.map((person) => {
-        return <Entry key={person.name} name={person.name} number={person.number}/>
+      {persons
+        .filter(person => person.name.includes(filter))
+        .map((person) => {
+        return <Entry key={person.id} name={person.name} number={person.number}/>
       })}
     </div>
   )
