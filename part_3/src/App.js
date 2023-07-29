@@ -1,26 +1,30 @@
 import { useState } from 'react'
 
-const Person = ({name}) => {
+const Entry = ({name, number}) => {
+  console.log('Creating entry: ', name, number);
 
   return (
     <div key={name}>
-      <p>{name}</p>
+      <p>{name} {number}</p>
     </div>
   )
 }
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '123' }
   ]);
+
   const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
 
   const addPerson = (event) => {
     event.preventDefault();
     console.log(event.target);
 
     const personObject = {
-      name: newName
+      name: newName,
+      number: newNumber
     }
 
     if(containsObject(personObject)) {
@@ -29,12 +33,21 @@ const App = () => {
     }
 
     setPersons(persons.concat(personObject));
+
+    console.log(persons);
+    
     setNewName('');
+    setNewNumber('');
   }
 
   const handleNameChange = (event) => {
     console.log(event.target.value);
     setNewName(event.target.value);
+  }
+
+  const handleNumberChange = (event) => {
+    console.log(event.target.value);
+    setNewNumber(event.target.value);
   }
 
   const containsObject = (obj) => {
@@ -48,19 +61,25 @@ const App = () => {
 
   return (
     <div>
+      
       <h2>Phonebook</h2>
+
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
         </div>
         <div>
+          number: <input value={newNumber} onChange={handleNumberChange} />
+        </div>
+        <div>
           <button type="submit">add</button>
         </div>
       </form>
+
       <h2>Numbers</h2>
-      {persons.map((person) => (
-        <Person name={person.name}/>
-      ))}
+      {persons.map((person) => {
+        return <Entry key={person.name} name={person.name} number={person.number}/>
+      })}
     </div>
   )
 }
