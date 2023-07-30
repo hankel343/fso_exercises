@@ -1,17 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import personService from './services/addperson';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Entries from './components/Entries';
-
-const Entry = ({id, name, number}) => {
-  console.log('Creating entry: ', name, number);
-  return (
-    <div key={id}>
-      <p>{name} {number}</p>
-    </div>
-  )
-}
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -26,7 +18,7 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons[-1].id + 1
+      id: persons.length + 1
     }
 
     if(containsObject(personObject)) {
@@ -34,8 +26,8 @@ const App = () => {
       return;
     }
 
-    setPersons(persons.concat(personObject));
-
+    const newPerson = personService.create(personObject)
+    setPersons(persons.concat(newPerson));
     console.log(persons);
     
     setNewName('');
