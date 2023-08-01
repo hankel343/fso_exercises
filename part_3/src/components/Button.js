@@ -1,7 +1,8 @@
-const Button = ({text, clickHandler}) => {
+const Button = ({text, clickHandler, id}) => {
+    console.log(text, " button clicked");
 
     return (
-        <button onClick={clickHandler}>
+        <button key={id} onClick={clickHandler}>
             {text}
         </button>
     )
