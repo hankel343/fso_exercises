@@ -21,8 +21,18 @@ const App = () => {
       id: persons.length + 1
     }
 
-    if(containsObject(personObject)) {
-      alert(`${newName} already exists in the phone book.`);
+    if(containsObjectName(personObject)) {
+      if (window.confirm(personObject.name + " is already in the phone book. Would you like to replace the old number with a new one?")) {
+        personObject.id = getIdByName(personObject.name);
+        personService
+          .update(personObject)
+          .then(res => {
+            console.log(personObject.name + " updated successfully", res);
+          })
+          .catch(err => {
+            console.log(personObject.name + " not updated", err);
+          })
+      }
       return;
     }
 
@@ -49,13 +59,22 @@ const App = () => {
     setFilter(event.target.value);
   }
 
-  const containsObject = (obj) => {
+  const containsObjectName = (obj) => {
     for (let i = 0; i < persons.length; i++) {
-      if (JSON.stringify(obj) === JSON.stringify(persons[i])) {
+      if (obj.name === persons[i].name) {
         return true;
       }
     }
     return false;
+  }
+
+  const getIdByName = (name) => {
+    for (let i = 0; i < persons.length; i++) {
+      if (name == persons[i].name)
+        return (i+1);
+    }
+
+    return -1;
   }
 
   // fetch data from server
