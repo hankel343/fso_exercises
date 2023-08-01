@@ -4,12 +4,14 @@ import personService from './services/addperson';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Entries from './components/Entries';
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+  const [toastMsg, setToastMsg] = useState('');
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -21,7 +23,7 @@ const App = () => {
       id: persons.length + 1
     }
 
-    if(containsObjectName(personObject)) {
+    if (containsObjectName(personObject)) {
       if (window.confirm(personObject.name + " is already in the phone book. Would you like to replace the old number with a new one?")) {
         personObject.id = getIdByName(personObject.name);
         personService
@@ -36,10 +38,22 @@ const App = () => {
       return;
     }
 
-    const newPerson = personService.create(personObject)
-    setPersons(persons.concat(newPerson));
-    console.log(persons);
-    
+    personService
+      .create(personObject)
+      .then(res => {
+        setPersons(persons.concat(res));
+        setToastMsg(
+          `Added ${personObject.name}`
+        );
+        setTimeout(() => {
+          setToastMsg(null)
+        }, 5000);
+      })
+      .catch(err => {
+        // TODO
+        // add toast msg logic
+      })
+
     setNewName('');
     setNewNumber('');
   }
@@ -70,7 +84,7 @@ const App = () => {
 
   const getIdByName = (name) => {
     for (let i = 0; i < persons.length; i++) {
-      if (name == persons[i].name)
+      if (name === persons[i].name)
         return (i+1);
     }
 
@@ -92,6 +106,7 @@ const App = () => {
     <div>
       
       <h2>Phonebook</h2>
+      <Notification message={toastMsg}/>
       <Filter filterStr={filter} handleChange={handleFilterChange} />
 
       <h2>Add a new entry</h2>
