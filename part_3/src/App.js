@@ -33,6 +33,14 @@ const App = () => {
           })
           .catch(err => {
             console.log(personObject.name + " not updated", err);
+
+            setToastMsg(
+              `Information for ${personObject.name} has already been removed from the server`
+            );
+
+            setTimeout(() => {
+              setToastMsg(null)
+            }, 5000);
           })
       }
       return;
@@ -42,16 +50,24 @@ const App = () => {
       .create(personObject)
       .then(res => {
         setPersons(persons.concat(res));
+        console.log(`Added ${personObject.name}`);
         setToastMsg(
           `Added ${personObject.name}`
         );
+
         setTimeout(() => {
           setToastMsg(null)
         }, 5000);
       })
       .catch(err => {
-        // TODO
-        // add toast msg logic
+        console.log("entering the catch clause");
+        setToastMsg(
+          `Information for ${personObject.name} has already been removed from the server`
+        );
+
+        setTimeout(() => {
+          setToastMsg(null)
+        }, 5000);
       })
 
     setNewName('');
