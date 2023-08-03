@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CountryInfo from './CountryInfo'
+import WeatherView from './WeatherView'
 
 const Display = ({ items }) => {
     const [isVisibleMap, setIsVisibleMap] = useState({});
@@ -41,6 +42,26 @@ const Display = ({ items }) => {
                         </div>
                     ))}
                 </ul>
+            </div>
+        )
+    } else {
+        // useEffect(() => {
+        //     console.log("weather useEffect()");
+
+        // })
+        
+        const country = items[0];
+        return (
+            <div>
+                <p>{country.name.common}</p>
+                <CountryInfo
+                    name={country.name}
+                    capitals={country.capital}
+                    area={country.area}
+                    languages={country.languages}
+                    flag={country.flag}
+                    isVisible={isVisibleMap[country.name.common]}
+                />
             </div>
         )
     }
