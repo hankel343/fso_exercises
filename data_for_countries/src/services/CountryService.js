@@ -6,9 +6,13 @@ const getAll = () => {
     return request.then(res => res.data);
 }
 
-const getCountry = (country) => {
-    console.log("performing getCountry on url: ", baseUrl + `name?q=${country}`);
-    const request = axios.get(baseUrl + `name/${country}`);
+const getCountry = (countryPrefix) => {
+    console.log("performing getCountry on url: ", baseUrl + `name?filter=startsWith(name.common,${countryPrefix})`);
+    const request = axios.get(baseUrl, {
+        params: {
+            filter: `startsWith(name.common, ${countryPrefix})`
+        }
+    });
     return request.then(res => res.data);
 }
 
