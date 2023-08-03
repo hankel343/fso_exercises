@@ -1,8 +1,19 @@
-import '../index'
+import { useState } from 'react'
+import CountryInfo from './CountryInfo'
+
 const Display = ({ items }) => {
+    const [isVisibleMap, setIsVisibleMap] = useState({});
+
+    const toggleVisibility = (countryName) => {
+        setIsVisibleMap((prevMap) => ({
+            ...prevMap,
+            [countryName]: !prevMap[countryName],
+        }));
+    };
+
     if (!items || items.length === 0)
         return (<div>No country data avaliable.</div>)
-        
+
     if (items.length > 10) {
         return (
             <div>
@@ -14,29 +25,22 @@ const Display = ({ items }) => {
             <div>
                 <ul>
                     {items.map((country, i) => (
-                        <li key={i}>{country.name.common}</li>
+                        <div>
+                            <p>{country.name.common}</p>
+                            <CountryInfo key={i}
+                                name={country.name}
+                                capitals={country.capital}
+                                area={country.area}
+                                languages={country.languages}
+                                flag={country.flag}
+                                isVisible={isVisibleMap[country.name.common]}
+                            />
+                            <button onClick={() => toggleVisibility(country.name.common)}>
+                                {isVisibleMap[country.name.common] ? "Hide" : "Show"}
+                            </button>
+                        </div>
                     ))}
                 </ul>
-            </div>
-        )
-    } else {
-        const country = items[0];
-        return (
-            <div>
-                <h1>{country.name.common}</h1>
-                <p>Capital: {country.capital[0]}</p>
-                <p>Area: {country.area}</p>
-                
-                <p><em>languages:</em></p>
-                <ul>
-                    {Object.values(country.languages).map((languageName, i) => (
-                        <li key={i}>{languageName}</li>
-                    ))}
-                </ul>
-
-                <div className="flag-container">
-                    {country.flag}
-                </div>
             </div>
         )
     }
