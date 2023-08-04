@@ -18,12 +18,10 @@ const getCountry = (countryPrefix) => {
 }
 
 const getCapitalWeather = (country) => {
-    if (country !== null) {
-        const [lat, lon] = country.capitalInfo.latlng;
-        const api_key = process.env.REACT_APP_API_KEY;
-        const request = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`);
-        return request.then(res => res.data);
-    }
+    const [lat, lon] = country.capitalInfo.latlng;
+    const api_key = process.env.REACT_APP_API_KEY;
+    const request = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`);
+    return request.then(res => res.data);
 }
 
 

@@ -1,7 +1,7 @@
 
-const CountryInfo = ({ name, capitals, area, languages, flag, isVisible }) => {
+const CountryInfo = ({ name, capitals, area, languages, flag, isVisible, hasMultiple }) => {
 
-    if (isVisible) {
+    if (isVisible || !hasMultiple) {
         return (
             <div>
                 <h1>{name.common}</h1>

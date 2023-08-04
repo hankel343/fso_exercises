@@ -5,16 +5,6 @@ import CountryService from '../services/CountryService';
 
 const Display = ({ items }) => {
     const [isVisibleMap, setIsVisibleMap] = useState({});
-    const [weatherData, setWeatherData] = useState({});
-
-    const getWeatherData = (country) => {
-        CountryService
-            .getCapitalWeather(country)
-            .then(res => {
-                console.log("weather promise fulfilled: ", res);
-                setWeatherData(res);
-            });
-    }
 
     const toggleVisibility = (countryName) => {
         setIsVisibleMap((prevMap) => ({
@@ -57,8 +47,6 @@ const Display = ({ items }) => {
         )
     } else {
         const country = items[0];
-        getWeatherData(country);
-        console.log("weather data used in the JSX: ", weatherData);
         return (
             <div>
                 <p>{country.name.common}</p>
@@ -69,13 +57,9 @@ const Display = ({ items }) => {
                     languages={country.languages}
                     flag={country.flag}
                     isVisible={isVisibleMap[country.name.common]}
+                    hasMultiple={items.length > 1}
                 />
-                {/* <WeatherView
-                    capital={country.capitals[0]}
-                    temp={weatherData.current.temp}
-                    icon={weatherData.current.weather.icon}
-                    windSpeed={weatherData.current.windSpeed}
-                /> */}
+                <WeatherView country={items[0]} />
             </div>
         )
     }
