@@ -26,6 +26,7 @@ const App = () => {
     if (containsObjectName(personObject)) {
       if (window.confirm(personObject.name + " is already in the phone book. Would you like to replace the old number with a new one?")) {
         personObject.id = getIdByName(personObject.name);
+        
         personService
           .update(personObject)
           .then(res => {
@@ -110,11 +111,11 @@ const App = () => {
   // fetch data from server
   useEffect(() => {
     console.log("useEffect()");
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(res => {
-        console.log('promise fulfilled', res);
-        setPersons(res.data);
+        console.log('getAll() promise fulfilled', res);
+        setPersons(res);
       })
   }, []);
 
