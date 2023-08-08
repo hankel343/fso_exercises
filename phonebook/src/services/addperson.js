@@ -7,7 +7,7 @@ const getAll = () => {
 }
 
 const create = newObject => {
-    const request = axios.post(baseUrl, newObject);
+    const request = axios.post(baseUrl + 'persons', newObject);
     return request.then(res => res.data);
 }
 
