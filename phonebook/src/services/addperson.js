@@ -17,7 +17,7 @@ const deleteEntry = (id) => {
 }
 
 const update = (personObject) => {
-    const request = axios.put(baseUrl + '/' + personObject.id, personObject);
+    const request = axios.put(baseUrl + 'persons/' + personObject.id, personObject);
     return request.then(res => res.data);
 }
 

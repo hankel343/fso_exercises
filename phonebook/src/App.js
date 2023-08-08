@@ -28,47 +28,47 @@ const App = () => {
         
         personService
           .update(personObject)
-          .then(res => {
-            console.log(personObject.name + " updated successfully", res);
-          })
-          .catch(err => {
-            console.log(personObject.name + " not updated", err);
+            .then(res => {
+              console.log(personObject.name + " updated successfully", res);
+            })
+            .catch(err => {
+              console.log(personObject.name + " not updated", err);
 
-            setToastMsg(
-              `Information for ${personObject.name} has already been removed from the server`
-            );
+              setToastMsg(
+                `Information for ${personObject.name} has already been removed from the server`
+              );
 
-            setTimeout(() => {
-              setToastMsg(null)
-            }, 5000);
-          })
+              setTimeout(() => {
+                setToastMsg(null)
+              }, 5000);
+            })
       }
       return;
     }
 
     personService
       .create(personObject)
-      .then(res => {
-        setPersons(persons.concat(res));
-        console.log(`Added ${personObject.name}`);
-        setToastMsg(
-          `Added ${personObject.name}`
-        );
+        .then(res => {
+          setPersons(persons.concat(res));
+          console.log(`Added ${personObject.name}`);
+          setToastMsg(
+            `Added ${personObject.name}`
+          );
 
-        setTimeout(() => {
-          setToastMsg(null)
-        }, 5000);
-      })
-      .catch(err => {
-        console.log("entering the catch clause");
-        setToastMsg(
-          `Information for ${personObject.name} has already been removed from the server`
-        );
+          setTimeout(() => {
+            setToastMsg(null)
+          }, 5000);
+        })
+        .catch(err => {
+          console.log("entering the catch clause");
+          setToastMsg(
+            `Information for ${personObject.name} has already been removed from the server`
+          );
 
-        setTimeout(() => {
-          setToastMsg(null)
-        }, 5000);
-      })
+          setTimeout(() => {
+            setToastMsg(null)
+          }, 5000);
+        })
 
     setNewName('');
     setNewNumber('');
@@ -101,7 +101,7 @@ const App = () => {
   const getIdByName = (name) => {
     for (let i = 0; i < persons.length; i++) {
       if (name === persons[i].name)
-        return (i+1);
+        return persons[i].id;
     }
 
     return -1;
