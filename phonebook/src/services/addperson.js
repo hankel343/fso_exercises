@@ -12,7 +12,7 @@ const create = newObject => {
 }
 
 const deleteEntry = (id) => {
-    const request = axios.delete(baseUrl + '/' + id);
+    const request = axios.delete(baseUrl + 'persons/' + id);
     return request.then(res => res.data);
 }
 

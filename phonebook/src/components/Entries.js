@@ -6,13 +6,13 @@ const Entries = ({ persons, filterStr }) => {
     const handleDeleteClick = (name, id) => {
         if (window.confirm("delete " + name + '?')) {
             personService
-            .deleteEntry(id)
-            .then(res => {
-                console.log("Entry deleted successfully", res);
-            })
-            .catch(err => {
-                console.log("Error deleting entry", err)
-            })
+                .deleteEntry(id)
+                    .then(res => {
+                        console.log("Entry deleted successfully", res);
+                    })
+                    .catch(err => {
+                        console.log("Error deleting entry", err)
+                    })
         }
     }
 
